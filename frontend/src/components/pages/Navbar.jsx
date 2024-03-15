@@ -1,22 +1,39 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {Link} from 'react-scroll'
 import {FaBars,FaTimes} from 'react-icons/fa'
-import {BiSearch} from 'react-icons/bi'
+import Login from '../pages/Login'
+// import {BiSearch} from 'react-icons/bi'
 
 
 
 
-export const Navbar = () => {
+const Navbar = () => {
 
     const [nav, setNav] = useState(false)
     const handileClick = () => setNav(!nav)
 
+    const [visible, setvisible] = useState(false)
+
+    let menuRef = useRef();
+
+    useEffect(() => {
+        let handler = (e) =>{
+            if(!menuRef.current.contains(e.target)){
+                setvisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+    });
+
   return (
     <>
-        <div className='fixed w-full h-[80px] flex justify-between items-center px-4 bg-[#404142] text-yellow-400'>
+        <div className='fixed w-full h-[60px] flex justify-between items-center px-4 bg-[#404142] text-yellow-400' ref={menuRef}>
             <div>
-                <a className='font-bold text-3xl' href="#">SITENAME</a>
+                <a className='font-bold text-2xl' href="#home">SITENAME</a>
             </div>
+
+            {/* Login page */}
+            {visible && <Login onClose={() => setvisible(false)} close={() => setvisible(false)} />}
 
             {/* menu */}
             
@@ -39,22 +56,22 @@ export const Navbar = () => {
 
             <ul className='hidden md:flex border border-none border-yellow-400 rounded-md'>
                 <li className='border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full mr-4 cursor-pointer p-2'>
-                    <Link to="home" smooth={true} duration={500} >
+                    <Link to="home" href='#home' smooth={true} duration={500} >
                         Home
                     </Link>
                 </li>
                 <li className='border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full mr-4 cursor-pointer p-2'>
-                    <Link to="about" smooth={true} duration={500} >
+                    <Link to="about" href='#about' smooth={true} duration={500} >
                         About
                     </Link>
                 </li>
                 <li className='border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full mr-4 cursor-pointer p-2'>
-                    <Link to="contact" smooth={true} duration={500} >
+                    <Link to="contact" href='#contact' smooth={true} duration={500} >
                         Contact
                     </Link>
                 </li>
                 <li className='border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full mr-4 cursor-pointer p-2'>
-                    <Link to="signup" smooth={true} duration={500} >
+                    <Link to="login" onClick={() => setvisible(true)} smooth={true} duration={500} >
                         Login
                     </Link>
                 </li>
@@ -68,6 +85,8 @@ export const Navbar = () => {
                     </label>
                 </li> */}
             </ul>
+
+            
     
 
             {/* Hamburger */}
@@ -76,23 +95,23 @@ export const Navbar = () => {
             </div>
             {/* Mobile menu */}
             <ul className={!nav ? 'hidden' : 'absolute top-0 left-0 w-full h-screen bg-[#404142] flex flex-col justify-center items-center'}>
-                <li className='py-2 text-4xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6'>
+                <li className='py-2 text-2xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6'>
                     <Link onClick={handileClick} to="home" smooth={true} duration={500} >
                         Home
                     </Link>
                 </li>
-                <li className='py-2 text-4xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
+                <li className='py-2 text-2xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
                     <Link onClick={handileClick} to="about" smooth={true} duration={500} >
                         About
                     </Link>
                 </li>
-                <li className='py-2 text-4xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
+                <li className='py-2 text-2xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
                     <Link onClick={handileClick} to="contact" smooth={true} duration={500} >
                         Contact
                     </Link>
                 </li>
-                <li className='py-2 text-4xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
-                    <Link onClick={handileClick} to="signup" smooth={true} duration={500} >
+                <li className='py-2 text-2xl cursor-pointer border border-none text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-full pl-6 pr-6 mt-2'>
+                    <Link onClick={() => {setvisible(true); handileClick(false)}} to="Login" smooth={true} duration={500} >
                         Login
                     </Link>
                 </li>
@@ -103,3 +122,5 @@ export const Navbar = () => {
     </>
   )
 }
+
+export default Navbar
