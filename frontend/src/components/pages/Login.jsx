@@ -35,7 +35,7 @@ const Login = ({onClose}) => {
                             (open === false)? <IoIosEye onClick={toggle}/> : <IoIosEyeOff onClick={toggle}/>
                         }   
                     </div>
-                    <p><span className='text-white ml-8 hover:text-green-500'>Create Account <Link onClick={() => setvisible(true)}>SIGNUP</Link> </span></p>
+                    <p><span className='text-white ml-8'>Create Account <Link onClick={() => setvisible(true)} className='hover:text-green-500'>SIGNUP</Link> </span></p>
                     <span><a href="#" className=' text-white ml-8 hover:text-blue-500'>Forgot password?</a></span>
                     <button className='w-4/5 h-7 my-3 mx-auto block justify-center text-white bg-yellow-600 hover:bg-yellow-500 text-base font-bold mt-5 rounded-full cursor-pointer'>login</button>
                     <div className='flex items-center justify-center gap-4 h-20 text-2xl'>
